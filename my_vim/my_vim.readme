@@ -1,0 +1,37 @@
+#This is my_vim.readme 
+
+Introduction
+	
+	According to the script name add something to the new script and continue editing the new script.
+
+	If the name is xxx.readme,add four rows such like :
+		#This is xxx.readme
+		Introduction
+		Example
+		Test
+	
+	If the name is xxx.sh or xxx.py add some other information for example:
+	xxx.py
+		#!/usr/bin/python
+		#coding:utf-8
+		##
+		# Filename : xxx.py
+		# Author   : zane
+		# Created  : 2016-12-28
+		# Describe : 
+		##
+		###########################
+	xxx.sh
+		#!/bin/bash
+		##
+		# Filename : xxx.sh
+		# Author   : zane
+		# Created  : 2016-12-28
+		# Describe : 
+		##
+		###########################
+	
+Example 
+
+Test
+

@@ -1,2 +1,4 @@
 # python-script 
-This is python scripts that corresponds with the my-bash-shell .  
+There are some  python scripts that similar to shell scripts which in my-bash-shell .  
+
+
