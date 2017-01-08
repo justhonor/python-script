@@ -1,0 +1,28 @@
+#This is connect_mysql.readme
+
+Introduction
+
+	Python script connect to mysql with mysql.connector and execute some sql .
+
+	Install mysql.connector
+		a. wget http://dev.mysql.com/get/Downloads/Connector-Python/mysql-connector-python-2.1.1.tar.gz
+		b. tar -zxvf mysql-connector-python-2.1.1.tar.gz
+		c. sudo python setup.py install
+Example
+	
+	aiapple@ubuntu:~/git/python-script/connect_mysql$ python connect_mysql.py 
+Test
+
+	aiapple@ubuntu:~/git/python-script/connect_mysql$ python connect_mysql.py 
+	(1, u'Geert', u'abcabcabcabcabcabcabcabcabcabc', 30)
+	Geert abcabcabcabcabcabcabcabcabcabc 
+	(2, u'Jan', u'abcabcabcabcabcabcabcabcabcabc', 31)
+	Jan abcabcabcabcabcabcabcabcabcabc 
+	(4, u'zane', u'haha', 100)
+	zane haha
+
+Notes
+
+	Every update,insert,delete needs to be committed manually by connection object.
+	But drop table,create table need't.
+	con.commit()
