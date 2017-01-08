@@ -1,0 +1,30 @@
+#This is analysis_dir.readme
+
+Introduction
+
+	Analysis the directory and give some reports.
+	Also find out some scripts that has more than N lines. (N default 150)
+
+	e.g:
+		a. How many scripts on the directory
+		b. How many lines of the whole scripts
+		c. The average length of those scripts
+		d. what is the longest script and how it has
+		e. what is the shortest script and how it has
+		f. what is the ratio of comments 
+
+Example
+
+	aiapple@ubuntu:~/git/python-script/analysis_dir$ python analysis_dir.py script/ 200 d
+
+Test
+	aiapple@ubuntu:~/git/python-script/analysis_dir$ python analysis_dir.py script/ 200 d
+		you have three correct parameters,line is 200,dir is d
+		cp script/check_cpu.sh to  d
+
+    		There are 36 scripts totaling 1165 lines
+    		The average of each script have 32.36 lines
+    		The ratio of comments is 14.85 % 
+    		The longest script is script/check_cpu.sh which have 217 lines 
+    		The shortest script is script/testuser2.sh which have 3 lines 
+
