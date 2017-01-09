@@ -41,7 +41,7 @@ def process_info(destfile):
 		
 		 # Is heading add four '#' 
 		 if line[0].isupper():
-			 line=line[:0]+"#### "+line[0:]
+			 line=line[:0]+"### "+line[0:]
 		
 		 # Is first line add a '#'
 		 if line[0]=='#':

@@ -12,5 +12,5 @@ Example
 Test
 
 Notes
-	f.write("%s\n"%line) need '\n' charictor
+	f.write("%s\n"%line) need '\n' charictory
 
