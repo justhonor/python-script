@@ -1,10 +1,16 @@
-#This is cp_info_into_file.readme
+# This is cp_info_into_file.readme
 
 Introduction
 
+	Add all the contents of the xxx.readme file from the python-scrit directory to README.md. 
+	And do some change for showing .
+		a.Add a '#' for first line
+		b.Add four '#' for each heading in the beging of the line.
+		c.Add <br> at end of each line
 Example
 
 Test
 
 Notes
+	f.write("%s\n"%line) need '\n' charictor
 

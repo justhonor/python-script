@@ -28,3 +28,12 @@ Test
     		The longest script is script/check_cpu.sh which have 217 lines 
     		The shortest script is script/testuser2.sh which have 3 lines 
 
+Notes
+	
+	a.Find the specific file type such as xxx.py, xxx.sh ..
+		import glob
+		#find *.pl
+		for filename in glob.glob(os.path.join(SOURCE,'*.pl')):
+
+Issue
+	a.Can not find files in subdirectory.
