@@ -36,16 +36,17 @@ def process_info(destfile):
 	 f=open('%s'%files,'r')
 	 for line in f.readlines():
 		 # Add <br> for each line
-		 if not line.isspace():
-			 line=line+" <br>"
-		
-		 # Is heading add four '#' 
-		 if line[0].isupper():
-			 line=line[:0]+"### "+line[0:]
+	#	 if not line.isspace():
+	#		 line=line+" <br>"
 		
 		 # Is first line add a '#'
 		 if line[0]=='#':
 			 line=line[:0]+"#"+line[0:]
+
+		 # Is heading add four '#' 
+		 if line[0].isupper():
+			 line=line[:0]+"### "+line[0:]
+		
 
 		 # Write to README.md
 #		 set_trace()
@@ -59,6 +60,6 @@ if __name__=="__main__":
     f=open('%s'%DESTFILE,'wr')
     f.write("# python-script\n")
     f.write("There are some  python scripts that similar to shell scripts which in my-bash-shell \n")
-    f.write("\n\n\n")
+    f.write("\n\n")
     f.close()
     process_info(DESTFILE)
