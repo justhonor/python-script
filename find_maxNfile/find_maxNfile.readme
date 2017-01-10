@@ -1,0 +1,40 @@
+#This is find_maxNfile.readme
+
+Introduction
+
+	Find top N lagrest files in the specify directory(comprise subdirectory).
+	Do some operations:
+		a. Delete all of those files
+		b. Delete specify file in those files
+		c. Backup specify file which find above to specify direcotry 
+Example
+
+	zane@zane-V:~/git/python-script/find_maxNfile$ python find_maxNfile.py /home 3
+Test
+	
+	zane@zane-V:~/git/python-script/find_maxNfile$ python find_maxNfile.py /home 3
+
+	    Here are top 3 largest files in /home
+        	         /home/zane/auth/j.d: 10240KB
+                	 /home/zane/.mozilla/firefox/1byzvzew.default/places.sqlite: 10240KB
+                 	/home/zane/git/python-script/find_maxNfile/CC/info_bk/51111: 10000KB
+    	    The options:
+            		     a   Delete all files above
+                	     d   Delete the specify file
+                 	     b   Backup the file to the directory
+
+    	    Others for end the script
+
+Notes
+	a. create array
+		myList = [[0] * 3] * 4  is wrong.Beacuse all point to a space in memory.
+		myList = [([0] * 3) for i in range(4)] is correct.
+	
+	b. range() reverse output
+		range(5)[::-1]
+
+	c. two values from raw_input
+		var1, var2 = raw_input("Enter two numbers here: ").split()
+	
+	d. copy file to directory
+		shutil.copy2(src,dst)

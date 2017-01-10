@@ -42,6 +42,7 @@ def Is_rd():
     file.write("Introduction\n\n")
     file.write("Example\n\n")
     file.write("Test\n\n")
+    file.write("Notes\n\n")
     file.close()
     os.system('vim %s' % sys.argv[1])
 

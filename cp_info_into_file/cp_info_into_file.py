@@ -8,8 +8,6 @@
 ##
 #############################################
 import os 
-import sys
-import glob
 #from ipdb import set_trace
 
 SOURCE='/home/aiapple/git/python-script'
