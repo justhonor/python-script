@@ -1,0 +1,23 @@
+#This is intrnder_detect.readme
+
+Introduction
+	
+	Find out top N ips that attempted to login system but failed all.
+	And just detect usernames what have in system.Ingore invalid user name.
+	Give a report:
+			a. Username what try to login
+			b. Times that attempt to login times
+			c. IP what Intruder used
+			d. Hostname Intrnder computer hostname 
+			e. Intrusion time period 
+	A bit like :
+	         Sr#  |USERS     |TIMES     |IP address      |Host name    |Time range
+ 	         1    |zane      |742       |222.186.21.73   |3(NXDOMAIN)  |Mar 13 08:48:31 -->Mar 20 02:09:23
+        	 2    |zane      |253       |222.186.129.245 |3(NXDOMAIN)  |Mar 13 08:48:31 -->Mar 20 02:09:23
+         	 2    |root      |253       |222.186.129.245 |3(NXDOMAIN)  |Mar 13 08:48:31 -->Mar 20 02:09:23
+Example
+
+Test
+
+Notes
+
