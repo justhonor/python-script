@@ -17,7 +17,27 @@ Introduction
          	 2    |root      |253       |222.186.129.245 |3(NXDOMAIN)  |Mar 13 08:48:31 -->Mar 20 02:09:23
 Example
 
+	zane@zane-V:~/git/python-script/intruder_detect$ python intrnder_detect.py 
 Test
+	zane@zane-V:~/git/python-script/intruder_detect$ python intrnder_detect.py 
+	Sr#  |USERS     |TIMES     |IP address      |Time  range                             |Host name
+	1    |zane      |742       |222.186.21.73   |Mar 15 14:04:52 --> Mar 16 10:47:06     |Unkown
+	2    |zane      |65        |222.186.129.245 |Mar 18 01:42:41 --> Mar 18 01:53:24     |Unkown
+	2    |root      |188       |222.186.129.245 |Mar 18 01:53:33 --> Mar 18 02:25:01     |Unkown
+	3    |zane      |78        |117.22.230.152  |Mar 14 14:41:44 --> Mar 14 15:24:21     |Unkown
 
 Notes
 
+	a.Python get hostname by ip
+		import socket
+		host=socket.gethostbyaddr("8.8.8.8"])
+
+	b.Python match characters from lines. 
+		Just like grep -v "invalid" | grep "Failed password"
+		import re
+		re.findall('invalid',line)==[] and re.findall('Failed password',line)==['Failed password']:
+	
+	c.split string. 
+		e.g: s="we are family" -> "we" "are" "family"
+		ss=s.split()
+		ss[0] --> "we"
