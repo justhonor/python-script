@@ -68,6 +68,9 @@ def Get_TopNfile():
             # update last line with filesize
             if i == TOPN-1 and filesize > int(topN[i][1]):
 #                set_trace()
+                for m in range(TOPN-1):
+                    topN[m][1]=topN[m+1][1]
+                    topN[m][0]=topN[m+1][0]
                 topN[i][1]=filesize
                 topN[i][0]=name
                 break
