@@ -15,7 +15,22 @@ Introduction
 		
 Example
 
+	zane@zane-V:~/git/python-script/login_manage$ python login_manage.py -a 10 root 192.168.56.10
+
+	zane@zane-V:~/git/python-script/login_manage$ python login_manage.py -i 10
 Test
 
-Notes
+	zane@zane-V:~/git/python-script/login_manage$ python login_manage.py -a 10 root 192.168.56.10
+	The authenticity of host '192.168.56.10 (192.168.56.10)' can't be established.
+	RSA key fingerprint is 5d:f0:e0:5d:c3:38:8e:7c:a6:9c:f9:a1:43:d9:a5:2c.
+	Are you sure you want to continue connecting (yes/no)? yes
+	root@192.168.56.10's password: 
 
+	zane@zane-V:~/git/python-script/login_manage$ python login_manage.py -i 10
+	Last login: Sat Dec 24 04:53:31 2016 from 192.168.56.1
+Notes
+	
+	a.ssh-add
+	  If you got errors like "Agent admitted failure to sign using the key".
+	  
+	  type "ssh-add ~/.ssh/id_rsa" will help you to fix the error.
