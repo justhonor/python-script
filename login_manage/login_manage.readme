@@ -1,0 +1,21 @@
+#This is login_manage.readme
+
+Introduction
+
+	Use alise name automate login to destination server.And you do not need entry password.
+	Function:
+		 a. login
+			Use alise name or user@host  to login
+			
+		 b. Manage alise names
+			Add 
+			Delete
+			change
+			look over
+		
+Example
+
+Test
+
+Notes
+
