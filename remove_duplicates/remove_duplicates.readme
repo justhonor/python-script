@@ -1,0 +1,28 @@
+#This is remove_duplicates.readme
+
+Introduction
+
+	Delete some duplicate files.
+
+Example
+
+	aiapple@aiapple:~/git/python-script/remove_duplicates$ python remove_duplicates.py 
+Test
+
+	aiapple@aiapple:~/git/python-script/remove_duplicates$ python remove_duplicates.py 
+	remove ./rrrrrrr.py
+	remove ./dupl/file0001_cp
+	remove ./dupl/file0000_cp
+
+
+Notes
+
+	a. Receive ouput from system command.
+		p = os.popen("md5sum %s"%filename)
+		output = p.read()
+
+	b. Find all files comprise the subdirectory.
+		for root,subdirs,files in os.walk(dirt):
+        		for name in files:
+
+
