@@ -16,14 +16,8 @@ Test
 	Send successed!!!
 
 Notes
-	a. Connect to stmp server.
-		Use unSSL to login smtp server with default port 25
-			server = smtplib.SMTP('smtp.163.com','25')  
+	Use unSSL to login smtp server with default port 25
+		server = smtplib.SMTP('smtp.163.com','25')  
 
-		Use SSL to login smtp server with default port 465
-			server =smtplib.SMTP_SSL('smtp.163.com','465')
-	
-	b. Detects whether string is a email address.
-		import re
-		email_regex = re.compile(r"[^@]+@[^@]+\.[^@]+")
-		if email_regex.match(string):
+	Use SSL to login smtp server with default port 465
+		server =smtplib.SMTP_SSL('smtp.163.com','465')

@@ -1,0 +1,45 @@
+#This is login_notify.readme
+
+Introduction
+
+	When some login your server,send a mail to notify you.
+Example
+
+	zane@zane-V:~/git/python-script/login_notify$ python login_notify.py 
+Test
+
+	zane@zane-V:~/git/python-script/login_notify$ python login_notify.py 
+	send mail:zane     :0           2017-01-14 13:09 (:0)
+	zane     pts/0        2017-01-15 16:08 (:0)
+	zane     pts/9        2017-01-14 13:16 (:0)
+	zane     pts/10       2017-01-15 16:09 (:0)
+	zane     pts/16       2017-01-14 15:21 (:0)
+	zane     pts/17       2017-01-15 16:13 (:0)
+	zane     pts/20       2017-01-15 14:12 (:0)
+	zane     pts/28       2017-01-15 16:16 (:0)
+	zane     pts/29       2017-01-15 16:48 (:0)
+	zane     pts/30       2017-01-15 16:52 (:0)
+	zane     pts/31       2017-01-15 16:53 (:0)
+
+	Send successed!!!
+
+	report:zane     pts/32       2017-01-15 16:56 (:0)
+
+	send report:zane     pts/32       2017-01-15 16:56 (:0)
+
+	Send successed!!!
+
+Notes
+	a. Add other path to python system path
+		 import sys
+		 sys.path.insert(0,"send_mail")
+		 import send_mail as send
+
+	b. Recevie outputs which  from system command 
+		 import subprocess as sub
+		 cmd = ['hostname']
+		 p = sub.Popen(cmd,stdout=sub.PIPE,stderr=sub.PIPE)
+		 out,err = p.communicate()
+
+
+
