@@ -1,0 +1,23 @@
+#This is send_mail.readme
+
+Introduction
+	Send a common text mail.The script uses it to send some warning messages.
+	You should deploy some agruments:
+					 SmtpServer
+					 SmtpPort
+					 FromAddr
+					 username
+Example
+	zane@zane-V:~/git/python-script/send_mail$ python send_mail.py 541469923@qq.com "P mail" "This is a test"
+	
+Test
+	zane@zane-V:~/git/python-script/send_mail$ python send_mail.py 541469923@qq.com "P mail" "This is a test"
+	Please input passwd for zane.zhang@zoom.us:
+	Send successed!!!
+
+Notes
+	Use unSSL to login smtp server with default port 25
+		server = smtplib.SMTP('smtp.163.com','25')  
+
+	Use SSL to login smtp server with default port 465
+		server =smtplib.SMTP_SSL('smtp.163.com','465')
