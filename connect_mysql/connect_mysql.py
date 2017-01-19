@@ -7,7 +7,6 @@
 # Describe:
 ##
 #############################################
-import os
 import mysql.connector as connector
 
 # create a connection object
