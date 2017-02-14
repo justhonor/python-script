@@ -1,0 +1,13 @@
+#This is data_sync.readme
+
+Introduction
+
+	During VA failover to CA,something writed into CA.
+	We should sync the data that writed into CA to VA when VA has up.
+
+Example
+
+Test
+
+Notes
+
