@@ -51,49 +51,41 @@ def connect(Host,Port,User,Passwd,Database):
 # user sync
 def user_sync():
     Find_Emails='SELECT DISTINCT email FROM zm_user WHERE create_time > %s AND create_time < %s '%(START_TIME,END_TIME)
-
     print 'Find_emails_ca:\n%s'%Find_Emails
 
-    ca_con,ca_cursor=connect(CA_HOST,CA_PORT,CA_USER,CA_PASSWD,DB)
-    va_con,va_cursor=connect(VA_HOST,VA_PORT,VA_USER,VA_PASSWD,DB)
-
-    # Find emails that exists in CA but not in VA
-    try:
-        ca_cursor.execute(Find_Emails)
-    except :
-        print 'ca_cursor Find_Emails_CA error'
-        sys.exit()
-
-    try:
-        va_cursor.execute(Find_Emails)
-    except :
-        print 'va_cursor Find_Emails_VA error'
-        sys.exit()
+    # Sep 1 find emails that exists in CA but not in VA
+    ca_execute(Find_Emails)
+    va_execute(Find_Emails)
 
     Emails_CA  = ca_cursor.fetchall()
     Emails_VA  = va_cursor.fetchall()
 
-    #print "CA:\n",Emails_CA
-    #print "VA:\n",Emails_VA
-
     # Get difference between two list
     #Emails = list(set(Emails_CA)-set(Emails_VA))
     Emails = [x for x in Emails_CA if x not in Emails_VA]
-
-    #print Emails
-
-    for email in Emails:
-        print email
-    # Find all userids by Emails
-    Find_Userids='SELECT user_id FROM zm_user WHERE email in %s '%Emails
-    try:
-        ca_cursor.execute(Find_Userids)
-    except :
-        print 'ca_cursor Find_Userids error'
-        sys.exit()
-
+    
+    # Sep 2  find all userids by Emails
+    S_Emails = list_to_string(Emails)
+    
+    Find_Userids = 'SELECT user_id FROM zm_user WHERE email in %s '%S_Emails
+    print "Find_Userids:\n",Find_Userids
+    
+    ca_execute(Find_Userids)
     UserIds_CA = ca_cursor.fetchall() 
-    print UserIds_CA
+    
+    S_UserIds_CA = list_to_string(UserIds_CA)
+    print "UserIDs_CA:\n",S_UserIds_CA
+
+    # Sep 3 find all infomation from CA  by UseIds
+    FindAll_From_user = 'select * from zm_user where user_id in %s'%S_UserIds_CA
+    print "FindAll_From_User:\n",FindAll_From_user
+
+    ca_execute(FindAll_From_user)
+    row=[]
+    while row is not None:
+        row = ca_cursor.fetchone()
+        print(row)
+    
 
     ca_cursor.close()
     ca_con.close()
@@ -101,5 +93,36 @@ def user_sync():
     va_cursor.close()
     va_con.close()
 
-user_sync()
+def ca_execute(sql):
+    try:
+        ca_cursor.execute(sql)
+    except :
+        print 'ca_cursor Find_Userids error'
+        sys.exit()
+
+
+def va_execute(sql):
+    try:
+        va_cursor.execute(sql)
+    except :
+        print 'va_cursor Find_Emails_VA error'
+        sys.exit()
+
+
+def list_to_string(list_1):
+    string=''
+    for e in list_1:
+        s_tmp = str(e).replace("(u","").replace(")","")
+        string = string + s_tmp
+
+    return '(' + string[:-1] + ')'
+
+if __name__ == "__main__":
+    global ca_con,ca_cursor
+    global va_con,va_cursor
+
+    ca_con,ca_cursor=connect(CA_HOST,CA_PORT,CA_USER,CA_PASSWD,DB)
+    va_con,va_cursor=connect(VA_HOST,VA_PORT,VA_USER,VA_PASSWD,DB)
+
+    user_sync()
 
