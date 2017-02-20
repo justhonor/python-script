@@ -10,7 +10,7 @@
 
 import mysql.connector as connector
 import sys
-
+#import ipdb
 
 START_TIME="'2016-12-20'"
 END_TIME="'2016-12-22'"
@@ -58,7 +58,7 @@ def user_sync():
     #Emails = [x for x in Emails_CA if x not in Emails_VA]
     #print "Emails %s"%Emails 
     if Emails == []:
-        print "There are no different between CA and VA"
+        print "There are no different between CA and VA on zm_user"
         sys.exit()
     # Sep 2  find all userids by Emails
     S_Emails = list_to_string(Emails)
@@ -142,7 +142,7 @@ def meeting_sync():
     all_from_webinar_user=ca_cursor.fetchall()
     print "all_from_webinar_user:\n",all_from_webinar_user
 
-    # Sep 4 insert into all infomation from CA to VA
+    # Sep 4 insert into all information from CA to VA
     insert_all_meeting = 'insert ignore into zm_meeting values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)'
     insert_all_meetingext = 'insert ignore into zm_meeting_ext values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)'
     insert_all_webinarext = 'insert ignore into zm_webinar_ext values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)'
@@ -151,6 +151,129 @@ def meeting_sync():
     excutemany("va",insert_all_meetingext,all_from_meetingext)
     excutemany("va",insert_all_webinarext,all_from_webinar)
     excutemany("va",insert_all_webinaruser,all_from_webinar_user)
+
+# telephone usage sync
+def tel_sync():
+    # Sep 1 find all information from CA zm_tel_call
+    Find_all_from_tel='SELECT * FROM zm_tel_call WHERE create_time > %s AND create_time < %s'%(START_TIME,END_TIME)
+    print "Find_all_from_tel:\n",Find_all_from_tel
+
+    ca_execute(Find_all_from_tel)
+    all_from_tel=ca_cursor.fetchall()
+    print "all_from_tel:\n",all_from_tel
+
+    # Sep 2 insert ignore into all information from CA to VA
+    insert_all_tel ='insert ignore into zm_tel_call values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)'
+    excutemany("va",insert_all_tel,all_from_tel)
+
+# account sync  --related tables(zm_account,zm_account_subscription)
+def account_sync():
+    '''
+        zm_account 
+    '''
+    # Sep 1 find account_ids that from ca but not exists va
+    Find_account_ids='SELECT account_id FROM zm_account WHERE create_time > %s AND create_time < %s'%(START_TIME,END_TIME)
+    print "Find_account_ids:\n",Find_account_ids
+
+    ca_execute(Find_account_ids)
+    ca_account_ids=ca_cursor.fetchall()
+    #print "ca_account_ids:\n",ca_account_ids
+
+    va_execute(Find_account_ids)
+    va_account_ids=va_cursor.fetchall()
+    #print "va_account_ids:\n",va_account_ids
+
+    # Get difference betweent above two list
+    account_ids=[x for x in ca_account_ids if x not in va_account_ids ]
+    print "account_ids:\n",account_ids
+    if account_ids == []:
+        print "There are no different between CA and VA on zm_account"
+        sys.exit()
+
+    S_account_ids=list_to_string(account_ids)
+    print "s_account_ids:\n",S_account_ids
+
+    # Sep 2 find all information from ca using above accout_ids.
+    Find_all_from_account='select * from zm_account where account_id in %s'%S_account_ids
+
+    ca_execute(Find_all_from_account)
+    ca_all_from_account=ca_cursor.fetchall()
+
+    # Sep 3 insert ignore all information that found above from ca to va
+    # there are 96 columns in table zm_account,need 96 %s
+    insert_all_from_account='insert ignore into zm_account values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)'
+    excutemany("va",insert_all_from_account,ca_all_from_account)
+
+    '''
+        zm_account_subscription
+    '''
+    # Sep 1 find all information from CA zm_tel_call
+    Find_all_from_sub='SELECT * FROM zm_account_subscription WHERE create_time > %s AND create_time < %s'%(START_TIME,END_TIME)
+    print "Find_all_from_sub:\n",Find_all_from_sub
+
+    ca_execute(Find_all_from_sub)
+    all_from_sub=ca_cursor.fetchall()
+    print "all_from_sub:\n",all_from_sub
+
+    # Sep 2 insert ignore into all information from CA to VA
+    insert_all_sub ='insert ignore into zm_tel_call values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)'
+    excutemany("va",insert_all_sub,all_from_sub)
+    
+# zm_account compare one by one using modify_time
+'''
+    If any column in zm_account's rows are different betweent CA and VA.And VA modify_time earlier than CA.Update the row from ca to va.
+'''
+def account_comp():
+    # Sep 1 get all from ca and va using modify_time
+    Get_all='SELECT * FROM zm_account WHERE modify_time > %s AND modify_time < %s'%(START_TIME,END_TIME)
+    print "Get_all:\n",Get_all
+
+
+    ca_execute(Get_all)
+    ca_get_all=ca_cursor.fetchall()
+    #print "ca_get_all:\n",ca_get_all
+
+
+    va_execute(Get_all)
+    va_get_all=va_cursor.fetchall()
+    #print "va_get_all:\n",va_get_all
+    
+
+    # Sep 2 compare modify_time and column
+    length=len(ca_get_all)
+    if length != len(va_get_all):
+        print "account error!"
+        sys.exit()
+
+    other_ca = ca_get_all
+    other_va = va_get_all
+    need_insert=[]
+    # modify_time index is 93
+    for i in range(length):
+        #ipdb.set_trace()
+        if ca_get_all[i][93] > va_get_all[i][93]:           # the va modify_time earlier than ca
+            other_ca[i]=ca_get_all[i][0:93]+ca_get_all[i][94:]
+            other_va[i]=va_get_all[i][0:93]+va_get_all[i][94:]
+            if cmp(other_ca[i],other_va[i]) != 0 :          # there are some difference in other column 
+                #print "update:\n",ca_get_all[i][0]
+                delete="delete from zm_account where account_id = '%s'"%ca_get_all[i][0]
+                print "delete:\n",delete
+                #va_execute(delete)
+                insert="insert ignore into zm_account values( '%s' )"%ca_get_all[i]
+                print "insert:\n",insert
+                #va_execute(insert)
+     #          need_insert.append(ca_get_all[i])
+            else:
+                print "no different betweent other column\n"
+
+        else:
+            print "ca_modify_time:%s   va_modify_time:%s"%(ca_get_all[i][93],va_get_all[i][93])
+    #print "need_insert:\n",need_insert
+    #insert='insert ignore into zm_account values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)'
+    #excutemany("va",insert,need_insert)
+
+
+
 
 
 def excutemany(location,sql,vaules):
@@ -199,8 +322,11 @@ if __name__ == "__main__":
     ca_con,ca_cursor=connect(CA_HOST,CA_PORT,CA_USER,CA_PASSWD,DB)
     va_con,va_cursor=connect(VA_HOST,VA_PORT,VA_USER,VA_PASSWD,DB)
 
-    meeting_sync()
+    #meeting_sync()
     #user_sync()
+    #tel_sync()
+    #account_sync()
+    account_comp()
 
     ca_cursor.close()
     ca_con.close()
