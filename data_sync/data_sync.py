@@ -10,7 +10,7 @@
 
 import mysql.connector as connector
 import sys
-#import ipdb
+import ipdb
 
 START_TIME="'2016-12-20'"
 END_TIME="'2016-12-22'"
@@ -77,6 +77,7 @@ def user_sync():
     # Sep 3 find all infomation from CA  by UserIds
     FindAll_From_user = 'select * from zm_user where user_id in %s'%S_UserIds_CA
     FindAll_From_usersns = 'select * from zm_usersns where user_id in %s'%S_UserIds_CA
+    FindAll_From_usersns_by_ctime = 'SELECT * FROM zm_usersns WHERE create_time > %s AND create_time < %s'%(START_TIME,END_TIME)
     FindAll_From_userprofile = 'select * from zm_userprofile where user_id in %s'%S_UserIds_CA
     #print "FindAll_From_User:\n",FindAll_From_user
     #print "FindAll_From_Usersns:\n",FindAll_From_usersns
@@ -88,6 +89,8 @@ def user_sync():
 
     ca_execute(FindAll_From_usersns)
     All_From_usersns=ca_cursor.fetchall()
+    ca_execute(FindAll_From_usersns_by_ctime)
+    All_From_usersns_by_ctime=ca_cursor.fetchall()
 
     ca_execute(FindAll_From_userprofile)
     All_From_userprofile=ca_cursor.fetchall()
@@ -103,6 +106,7 @@ def user_sync():
     insert_all_userprofile = 'insert ignore into zm_userprofile values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)'
     excutemany("va",insert_all_user,All_From_user)
     excutemany("va",insert_all_usersns,All_From_usersns)
+    excutemany("va",insert_all_usersns,All_From_usersns_by_ctime)
     excutemany("va",insert_all_userprofile,All_From_userprofile)
     print "Inserting successfuly"
     print "User sync Suceessfuly\n"
@@ -255,24 +259,26 @@ def account_comp():
     print "==============================================="
     print "Begining account compare sync....."
     # Sep 1 get all from ca and va using modify_time
-    Get_all='SELECT * FROM zm_account WHERE modify_time > %s AND modify_time < %s'%(START_TIME,END_TIME)
-    #print "Get_all:\n",Get_all
+    CA_get_all='SELECT * FROM zm_account WHERE modify_time > %s AND modify_time < %s'%(START_TIME,END_TIME)
+    CA_account_ids='SELECT account_id FROM zm_account WHERE modify_time > %s AND modify_time < %s'%(START_TIME,END_TIME)
 
-
-    ca_execute(Get_all)
+    ca_execute(CA_get_all)
     ca_get_all=ca_cursor.fetchall()
-    #print "ca_get_all:\n",ca_get_all
 
+    ca_execute(CA_account_ids)
+    ca_account_ids=ca_cursor.fetchall()
+    CA_account_ids=list_to_string(ca_account_ids)
 
-    va_execute(Get_all)
+    ### Find all from CA by ca account_id 
+    VA_get_all='select * from zm_account where account_id in %s'%CA_account_ids
+    va_execute(VA_get_all)
     va_get_all=va_cursor.fetchall()
     #print "va_get_all:\n",va_get_all
-    
 
     # Sep 2 compare modify_time and column
     length=len(ca_get_all)
     if length != len(va_get_all):
-        print "account error!\n"
+        print "The numbers of account_id are defferent. return!\n"
         return
 
     other_ca = ca_get_all
@@ -280,6 +286,7 @@ def account_comp():
     need_insert=[]
     account_ids=[]
     # modify_time index is 93
+    ipdb.set_trace()
     for i in range(length):
         #ipdb.set_trace()
         if ca_get_all[i][93] > va_get_all[i][93]:              # the va modify_time earlier than ca
@@ -290,7 +297,7 @@ def account_comp():
                 #print "update:\n",ca_get_all[i][0]
                 delete="delete from zm_account where account_id = '%s'"%ca_get_all[i][0]
                 account_ids.append(ca_get_all[i][0])
-                #print "delete:\n",delete
+                print "delete:\n",delete
                 va_execute(delete)
                 #S_ca_get_all = str(ca_get_all[i]).replace("u","").replace("None","NULL")
                 #insert="insert ignore into zm_account values %s "%S_ca_get_all
