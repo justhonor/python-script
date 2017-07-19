@@ -1,0 +1,22 @@
+#This is monitor_PK.readme
+
+Introduction
+
+	We have to know the status of primary key of the table.So we need to monitor the column of the primary key.
+	Functions:
+		a.How many tables are not using Auto-increment INT as the primary key and who are them?
+		b.When the value of the Auto-increment primary key over 70% of INT send a warning .
+
+Example
+
+	zane@zane-V:~/git/python-script/monitor_PK$ python monitor_PK.py 
+	There are some table do not use INT Auto_increment as it's PK:
+	[u'aaa', u'bbb', u'ccc', u'email_f', u'f', u'getmeeting', u'migrate_upload_account', u'migrate_zm_account', u'migrate_zm_account_subscription', u'online_table', u't1', u'test_1', u'test_222', u'zm_account_alert', u'zm_account_callout_rate', u'zm_account_cmr_rate', u'zm_account_ext', u'zm_account_history', u'zm_account_invite', u'zm_account_phone', u'zm_account_plan_trial', u'zm_account_special_plan', u'zm_account_special_plan_copy', u'zm_account_subscription', u'zm_account_toll_number', u'zm_account_tollfree_number', u'zm_account_tollfree_rate', u'zm_account_webinar_email', u'zm_account_webinar_setting', u'zm_activeuser_usage', u'zm_activeuser_usage_bak', u'zm_admin', u'zm_apac_did', u'zm_assistant', u'zm_billing_history', u'zm_billing_history_old', u'zm_branding', u'zm_client_device', u'zm_client_settings', u'zm_cloud_rc', u'zm_config', u'zm_da_domain', u'zm_daily_view', u'zm_domain', u'zm_h323_device', u'zm_hipchat_user', u'zm_hybrid_zc', u'zm_im_group', u'zm_im_group_member', u'zm_integration', u'zm_lync_room', u'zm_ma_admin', u'zm_ma_billing', u'zm_ma_invoice_item', u'zm_ma_shared_connector', u'zm_ma_shared_group', u'zm_ma_subaccount', u'zm_meeting', u'zm_meeting_ext', u'zm_meeting_ext_history', u'zm_meeting_history', u'zm_meeting_instance_ext', u'zm_meeting_occurrence', u'zm_meeting_occurrence_user', u'zm_meeting_segment', u'zm_meeting_viewer', u'zm_migrate_usage', u'zm_mimo', u'zm_mimo_email', u'zm_mimo_security_key', u'zm_mimo_security_key_test', u'zm_mimo_status', u'zm_mimo_status_ext', u'zm_monthly_view', u'zm_op_account_sales', u'zm_op_setting', u'zm_op_upsell', u'zm_pairing_code', u'zm_partition_record', u'zm_phone', u'zm_polling', u'zm_polling_detail', u'zm_polling_question', u'zm_polling_user_result', u'zm_presence_history', u'zm_presence_status', u'zm_recording_file', u'zm_recording_file_ext', u'zm_recording_meeting', u'zm_recording_usage_daily', u'zm_recurly_usage_api', u'zm_recurly_usage_audio', u'zm_recurly_usage_cmr', u'zm_referral', u'zm_request', u'zm_reseller_invoice', u'zm_role', u'zm_role_permission', u'zm_room', u'zm_room_sta_history', u'zm_saml', u'zm_tel_call', u'zm_tel_ivr', u'zm_tmp_user', u'zm_tmp_user_history', u'zm_toll_number', u'zm_tollfree_number', u'zm_unique_control', u'zm_usage_api', u'zm_usage_audio', u'zm_usage_recording', u'zm_user', u'zm_user_emailtemplate', u'zm_user_history', u'zm_user_role', u'zm_user_story', u'zm_user_test', u'zm_user_token', u'zm_usergroup', u'zm_usergroup_ext', u'zm_usergroup_member', u'zm_userprofile', u'zm_userprofile_email_11111', u'zm_userprofile_ext', u'zm_userprofile_ext2', u'zm_userprofile_history', u'zm_usersns', u'zm_usersns_history', u'zm_virtual_rc', u'zm_webinar_email', u'zm_webinar_ext', u'zm_webinar_ext_history', u'zm_webinar_history', u'zm_webinar_template', u'zm_webinar_template_instance', u'zm_webinar_user', u'zm_webinar_user_history', u'zm_zapier_subscribe', u'zm_zc', u'zm_zuora_products', u'zm_zuora_products_price', u'zm_zuora_products_price_copy', u'zm_account']
+
+	The list of  tables which the value of PK over 1000 is :
+	[u'zm_billing_cancel_log', u'zm_location_ext', u'zm_feedback']
+
+Test
+	zane@zane-V:~/git/python-script/monitor_PK$ python monitor_PK.py
+Notes
+
