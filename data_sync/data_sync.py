@@ -259,7 +259,7 @@ def account_comp():
                 delete="delete from zm_account where account_id = '%s'"%ca_get_all[i][0]
                 print "delete:\n",delete
                 #va_execute(delete)
-                insert="insert ignore into zm_account values( '%s' )"%ca_get_all[i]
+                insert="insert ignore into zm_account values('%s')"%ca_get_all[i]
                 print "insert:\n",insert
                 #va_execute(insert)
      #          need_insert.append(ca_get_all[i])

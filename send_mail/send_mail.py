@@ -91,22 +91,3 @@ if __name__=="__main__":
     check_input()
     sendmail(ToAddr,Subject,Body)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

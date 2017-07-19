@@ -26,7 +26,6 @@ def Find_spec_file(dirt,wildcard):
 			#print output
 	return output
 
-#Find_spec_file(SOURCE,wildcard)
 def process_info(destfile):
     md=open('%s'%destfile,'a')
     # Find xxx.readme with fullpath

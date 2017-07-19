@@ -38,3 +38,7 @@ Notes
 	
 	d. copy file to directory
 		shutil.copy2(src,dst)
+
+	e. find all file 
+		for root,subdirs,files in os.walk(dirt):
+            		for name in files:

@@ -12,5 +12,9 @@ Example
 Test
 
 Notes
-	f.write("%s\n"%line) need '\n' charictory
+	a. f.write("%s\n"%line) need '\n' charictory
+	
+	b. Find all files in directory include subdirectory.
+		for root,subdirs,files in os.walk(dirt):
+
 
