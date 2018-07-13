@@ -17,7 +17,7 @@ DB='ssbdb'
 Theashold=1000
 
 # Ca slave could write
-CA_HOST='datasyncca.cx8segvsabtq.us-west-1.rds.amazonaws.com'
+CA_HOST='xxxx'
 CA_USER='devdb'
 CA_PASSWD='00000000'
 CA_PORT='3306'
